@@ -73,6 +73,8 @@ add_action( 'admin_init', 'cf_convertkit_init_license' );
 //load the add-on
 add_action( 'caldera_forms_pre_load_processors', 'cf_convertkit_load' );
 
-
+//add the sequences/forms refresh button to those inputs
 add_action( 'caldera_forms_processor_ui_input_html', 'cf_convert_kit_add_refresh_button', 10, 3 );
+
+//Get the dropdown options for sequences/forms via the AJAX
 add_action( 'wp_ajax_cf_convertkit_dropdown_options', 'cf_convertkit_dropdown_options' );

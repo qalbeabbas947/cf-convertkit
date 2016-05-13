@@ -27,7 +27,6 @@ echo $config_fields;
 		$( '.cf-convertkit-refresh' ).on( 'click', function(e){
 			e.preventDefault();
 			var type = $( this ).attr( 'data-refresh-type' );
-			alert( type );
 			resetDropdown( type, true );
 		});
 
@@ -45,7 +44,6 @@ echo $config_fields;
 
 			var xhr = $.get( ajaxurl, data );
 			xhr.done(function( r ) {
-
 				if( 'object' == typeof  r ){
 					$( '#cf-convertkit-' + type + '-wrap .caldera-config-field' ).html( '' ).append( r.data.input );
 				}

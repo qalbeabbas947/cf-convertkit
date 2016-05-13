@@ -21,14 +21,12 @@ use calderawp\convertKit\sequences;
 
  */
 function cf_convertkit_load(){
-
 	Caldera_Forms_Autoloader::add_root( 'CF_ConvertKit', CF_CONVERTKIT_PATH . 'classes' );
 	new CF_ConvertKit_Processor( cf_convertkit_config(), cf_convertkit_fields(), 'cf_converkit' );
-
 }
 
 /**
- * Awber for Caldera Forms config
+ * ConverKit for Caldera Forms config
  *
  * @since 0.1.0
  *
@@ -48,6 +46,13 @@ function cf_convertkit_config(){
 
 }
 
+/**
+ * Get the field configuration for the forms input
+ *
+ * @since 0.1.0
+ *
+ * @return array
+ */
 function cf_convertkit_forms_field_config(){
 	return array(
 		'id'            => 'cf-convertkit-form',
@@ -58,6 +63,13 @@ function cf_convertkit_forms_field_config(){
 	);
 }
 
+/**
+ * Get the field configuration for the sequences input
+ *
+ * @since 0.1.0
+ *
+ * @return array
+ */
 function cf_convertkit_sequences_field_config(){
 	return array(
 		'id'            => 'cf-convertkit-sequence',
@@ -68,6 +80,13 @@ function cf_convertkit_sequences_field_config(){
 	);
 }
 
+/**
+ * Get the field configurations for all of the fields.
+ *
+ * @since 0.1.0
+ *
+ * @return array
+ */
 function cf_convertkit_fields(){
 	return array(
 		array(
@@ -126,6 +145,16 @@ function cf_convertkit_init_license(){
 
 }
 
+/**
+ * Get all of the forms of an account
+ *
+ * @since 0.1.0
+ *
+ * @param string $api_key The API key.
+ * @param bool $from_cache Optional. If true, cache is skipped. Default is false.
+ *
+ * @return array|mixed|object|string
+ */
 function cf_convertkit_get_forms( $api_key, $from_cache = false ){
 	$cache_key = md5( __FUNCTION__, $api_key );
 	$forms = array();
@@ -140,6 +169,16 @@ function cf_convertkit_get_forms( $api_key, $from_cache = false ){
 
 }
 
+/**
+ * Get all of the sequences of an account
+ *
+ * @since 0.1.0
+ *
+ * @param string $api_key The API key.
+ * @param bool $from_cache Optional. If true, cache is skipped. Default is false.
+ *
+ * @return array|mixed|object|string
+ */
 function cf_convertkit_get_sequences( $api_key, $from_cache = false ){
 
 	$cache_key = md5( __FUNCTION__, $api_key );
@@ -206,6 +245,13 @@ function cf_convert_kit_add_refresh_button( $field, $type, $id ){
 
 }
 
+/**
+ * Get dropdown options for forms/sequences inputs via AJAX
+ *
+ * @uses "wp_ajax_cf_convertkit_dropdown_options" action
+ *
+ * @since 0.1.0
+ */
 function cf_convertkit_dropdown_options(){
 	if( isset( $_GET[ 'nonce' ] ) && isset( $_GET[ 'dropdown' ] ) && is_string(  $_GET[ 'dropdown' ] ) && in_array( $_GET[ 'dropdown' ], array( 'form', 'sequence') ) && isset( $_GET[ 'api_key' ]) ){
 		if( wp_verify_nonce(  $_GET[ 'nonce'] ) && current_user_can( Caldera_Forms::get_manage_cap( 'edit' ) ) ){
