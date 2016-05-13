@@ -1,0 +1,6 @@
+Plugin Name -- ConvertKit for Caldera FOrms
+Text domain -- cf-convertkit
+Function prefix -- cf_convertkit
+Class prefix - n/a
+Root namespace -- n/a
+Filter Prefix -- n/a
