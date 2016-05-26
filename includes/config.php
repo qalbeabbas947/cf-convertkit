@@ -10,7 +10,7 @@
  */
 
 $class = 'notice notice-error';
-$message = printf( '<div class="notice"><p>%s</p></div>', esc_html__( 'You can choose to add subscriber to a ConvertKit form, a ConvertKit sequence or both. If you choose neither nothing will be changed in your ConvertKit account.', 'cf-convetkit' ) );
+$message = printf( '<div class="notice"><p>%s</p></div>', esc_html__( 'You can use this processor to add a subscriber to a ConvertKit form, a ConvertKit sequence or both. If you choose neither nothing will be changed in your ConvertKit account.', 'cf-convertkit' ) );
 
 $config_fields              = Caldera_Forms_Processor_UI::config_fields( cf_convertkit_fields() );
 echo $config_fields;
