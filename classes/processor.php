@@ -20,15 +20,15 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 	public function pre_processor( array $config, array $form, $proccesid ){
 		$this->set_data_object_initial( $config, $form );
 		$api_key = $this->data_object->get_value( 'cf-converkit-api-key' );
-		$form = $this->data_object->get_value( 'cf-convertkit-form' );
+		$ck_form = $this->data_object->get_value( 'cf-convertkit-form' );
 		$subscriber = $this->prepare_subscriber();
 
 		if( ! isset( $subscriber[ 'email'] ) || ! is_email( $subscriber[ 'email'] ) ){
 			$this->data_object->add_error( esc_html__( 'Email invalid', 'cf-converkit' ) );
 		}else{
-			if ( is_numeric( $form ) ) {
+			if ( is_numeric( $ck_form ) ) {
 				$form_client = new forms( $api_key );
-				$added       = $form_client->add( $form, $subscriber );
+				$added       = $form_client->add( $ck_form, $subscriber );
 				if ( is_string( $added ) ) {
 					$this->data_object->add_error( $added );
 				} else {
