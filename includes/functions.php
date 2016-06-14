@@ -248,7 +248,7 @@ function cf_convertkit_example_form( $forms ) {
  * @return string
  */
 function cf_convert_kit_add_refresh_button( $field, $type, $id ){
-	return $field;
+	
 	if( 'cf-convertkit-sequence' == $id || 'cf-convertkit-form' == $id ){
 		$id_attr = $id . '-refresh';
 		$field .= sprintf( ' <button class="button cf-convertkit-refresh" id="%s" data-refresh-type="%s">%s</button>',
