@@ -37,7 +37,7 @@ function cf_convertkit_config(){
 	return array(
 		"name"				=>	__( 'ConvertKit for Caldera Forms', 'cf-convertkit'),
 		"description"		=>	__( 'ConvertKit integration for Caldera Forms', 'cf-convertkit'),
-		"icon"				=>	CF_CONVERTKIT_URL . "icon.png",
+		"icon"				=>	CF_CONVERTKIT_URL . "/icon.png",
 		"author"			=>	'Josh Pollock for CalderaWP LLC',
 		"author_url"		=>	'https://CalderaWP.com',
 		"template"			=>	CF_CONVERTKIT_PATH . "includes/config.php",
