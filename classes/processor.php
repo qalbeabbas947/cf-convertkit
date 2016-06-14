@@ -19,7 +19,12 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 	 */
 	public function pre_processor( array $config, array $form, $proccesid ){
 		$this->set_data_object_initial( $config, $form );
-		$api_key = $this->data_object->get_value( 'cf-converkit-api-key' );
+		$api_key = $this->data_object->get_value( 'cf-convertkit-apikey' );
+		if( ! $api_key ){
+			$this->data_object->add_error( esc_html__( 'No ConvertKit API key set.', 'cf-converkit' ) );
+			return $this->data_object->get_errors();
+
+		}
 		$ck_form = $this->data_object->get_value( 'cf-convertkit-form' );
 		$subscriber = $this->prepare_subscriber();
 
@@ -29,7 +34,7 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 			if ( is_numeric( $ck_form ) ) {
 				$form_client = new forms( $api_key );
 				$added       = $form_client->add( $ck_form, $subscriber );
-				if ( is_string( $added ) ) {
+				if ( is_string( $added ) || is_numeric( $added ) ) {
 					$this->data_object->add_error( $added );
 				} else {
 					Caldera_Forms::set_submission_meta( 'converkit-form', $added, $form, $proccesid );
@@ -41,7 +46,7 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 				if ( is_numeric( $sequence ) ) {
 					$sequence_client = new sequences( $api_key );
 					$added           = $sequence_client->add( $sequence, $subscriber );
-					if ( is_string( $added ) ) {
+					if ( is_string( $added ) || is_numeric( $added ) ) {
 						$this->data_object->add_error( $added );
 					} else {
 						Caldera_Forms::set_submission_meta( 'convertkit-sequence', $added, $form, $proccesid );
