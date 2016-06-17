@@ -151,7 +151,7 @@ function cf_convertkit_fields(){
 function cf_convertkit_init_license(){
 
 	$plugin = array(
-		'name'		=>	'ConvertKit for Caldera FOrms',
+		'name'		=>	'ConvertKit for Caldera Forms',
 		'slug'		=>	'convertkit-for-caldera-forms',
 		'url'		=>	'https://calderawp.com/',
 		'version'	=>	CF_CONVERTKIT_VER,
