@@ -55,15 +55,16 @@ function cf_convertkit_config(){
  */
 function cf_convertkit_forms_field_config(){
 	return array(
-		'id'       => 'cf-convertkit-form',
-		'label'    => __( 'Form', 'cf-convertkit' ),
-		'type'     => 'dropdown',
-		'options'  => array(
+		'id'            => 'cf-convertkit-form',
+		'label'         => __( 'Form', 'cf-convertkit' ),
+		'type'          => 'dropdown',
+		'options'       => array(
 			0 => __( '-- Select A ConvertKit Form --', 'cf-convertkit' )
 		),
-		'desc'     => __( 'ConvertKit form to add subscriber to.', 'cf-convertkit' ),
-		'required' => false,
-		'extra_classes' => 'field-config'
+		'desc'          => __( 'ConvertKit form to add subscriber to.', 'cf-convertkit' ),
+		'required'      => false,
+		'extra_classes' => 'field-config',
+		'magic'         => false
 	);
 }
 
@@ -76,15 +77,16 @@ function cf_convertkit_forms_field_config(){
  */
 function cf_convertkit_sequences_field_config(){
 	return array(
-		'id'       => 'cf-convertkit-sequence',
-		'label'    => __( 'Sequence', 'cf-convertkit' ),
-		'type'     => 'dropdown',
-		'options'  => array(
+		'id'            => 'cf-convertkit-sequence',
+		'label'         => __( 'Sequence', 'cf-convertkit' ),
+		'type'          => 'dropdown',
+		'options'       => array(
 			0 => __( '-- Select A ConvertKit Sequence --', 'cf-convertkit' )
 		),
-		'desc'     => __( 'ConvertKit sequence to add subscriber to. Sequences are also referred to as courses.', 'cf-convertkit' ),
-		'required' => false,
-		'extra_classes' => 'field-config'
+		'desc'          => __( 'ConvertKit sequence to add subscriber to. Sequences are also referred to as courses.', 'cf-convertkit' ),
+		'required'      => false,
+		'extra_classes' => 'field-config',
+		'magic'         => false
 	);
 }
 
@@ -251,7 +253,7 @@ function cf_convert_kit_add_refresh_button( $field, $type, $id ){
 	
 	if( 'cf-convertkit-sequence' == $id || 'cf-convertkit-form' == $id ){
 		$id_attr = $id . '-refresh';
-		$field .= sprintf( ' <button class="button cf-convertkit-refresh" id="%s" data-refresh-type="%s">%s</button>',
+		$field .= sprintf( ' <a class="button cf-convertkit-refresh" id="%s" data-refresh-type="%s">%s</a>',
 			esc_attr( $id_attr ),
 			esc_attr( str_replace( array( '-refresh', 'cf-convertkit-' ), '', $id_attr  ) ),
 			esc_html__( 'Refresh', 'cf-converkit' )
