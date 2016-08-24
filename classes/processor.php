@@ -38,7 +38,10 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 				if ( is_string( $added ) || is_numeric( $added ) ) {
 					$this->data_object->add_error( $added );
 				} else {
-					Caldera_Forms::set_submission_meta( 'converkit-form', $added, $form, $proccesid );
+					if( isset( $added->subscription ) && isset( $added->subscription->id ) ) {
+						Caldera_Forms::set_submission_meta( 'convertkit-form-subscriber-id', $added->subscription->id, $form, $proccesid );
+					}
+
 				}
 			}
 
@@ -50,8 +53,11 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 					if ( is_string( $added ) || is_numeric( $added ) ) {
 						$this->data_object->add_error( $added );
 					} else {
-						Caldera_Forms::set_submission_meta( 'convertkit-sequence', $added, $form, $proccesid );
+						if ( isset( $added->subscription ) && isset( $added->subscription->id ) ) {
+							Caldera_Forms::set_submission_meta( 'convertkit-form-sequence-id', $added->subscription->id, $form, $proccesid );
+						}
 					}
+
 				}
 			}
 		}
