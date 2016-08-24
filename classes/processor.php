@@ -18,6 +18,7 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 	 * @return array Return if errors, do not return if not
 	 */
 	public function pre_processor( array $config, array $form, $proccesid ){
+		add_filter(  'caldera_forms_' . $this->slug . '_fields', array( $this, 'fixed_required' )  );
 		$this->set_data_object_initial( $config, $form );
 		$api_key = $this->data_object->get_value( 'cf-convertkit-apikey' );
 		if( ! $api_key ){
@@ -72,6 +73,27 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 		return $subscriber;
 	}
 
+	/**
+	 * Unset our extra fields onbly used in admin
+	 *
+	 * @since 1.0.2
+	 *
+	 * @uses "caldera_forms_cf_convertkit_fields" filter
+	 *
+	 * @param $fields
+	 *
+	 * @return mixed
+	 */
+	public function fixed_required( $fields ){
+		foreach( $fields as $i => $field ){
+			if( in_array( $field[ 'id' ], array( 'cf-convertkit-sequence', 'cf-convertkit-form' ) ) ){
+				unset( $fields[$i] );
+			}
+		}
+
+		return $fields;
+	}
+
 
 	/**
 	 * Add a subscriber to a list
@@ -84,7 +106,7 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 	 * @return mixed
 	 */
 	public function subscribe( array $subscriber_data, $list_name ){
-		
+		//it smells bad that Josh didn't use this, but we have two different types of things like lists with ConvertKit, so...
 	}
 
 }
