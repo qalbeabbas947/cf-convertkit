@@ -302,7 +302,10 @@ function cf_convertkit_dropdown_options(){
 
 			$the_options = array();
 			if( ! empty( $options  ) && property_exists( $options, $prop )){
-				$the_options = array_merge( array( 0 => '--' ), array_combine( wp_list_pluck( $options->$prop, 'id'  ), wp_list_pluck( $options->$prop, 'name'  )  ) );
+				$the_options = array_combine( wp_list_pluck( $options->$prop, 'id'  ), wp_list_pluck( $options->$prop, 'name'  )  );
+				$the_options[0] = __( sprintf( '-- Select A ConvertKit %s --', ucwords( $_GET[ 'dropdown' ] ) ), 'cf-convertkit' );
+				ksort( $the_options );
+
 			}
 
 			$config[ 'type' ] = 'dropdown';

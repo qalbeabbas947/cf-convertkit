@@ -32,7 +32,7 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 		if( ! isset( $subscriber[ 'email'] ) || ! is_email( $subscriber[ 'email'] ) ){
 			$this->data_object->add_error( esc_html__( 'Email invalid', 'cf-converkit' ) );
 		}else{
-			if ( is_numeric( $ck_form ) ) {
+			if ( 0 < absint( $ck_form ) ) {
 				$form_client = new forms( $api_key );
 				$added       = $form_client->add( $ck_form, $subscriber );
 				if ( is_string( $added ) || is_numeric( $added ) ) {
@@ -47,7 +47,7 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 
 			if ( is_null( $this->data_object->get_errors() ) ) {
 				$sequence = $this->data_object->get_value( 'cf-convertkit-sequence-id' );
-				if ( is_numeric( $sequence ) ) {
+				if ( 0 < absint( $sequence ) ) {
 					$sequence_client = new sequences( $api_key );
 					$added           = $sequence_client->add( $sequence, $subscriber );
 					if ( is_string( $added ) || is_numeric( $added ) ) {
