@@ -26,7 +26,6 @@ echo $config_fields;
 	var apiKey = jQuery( '#cf-convertkit-apikey' ).val();
 
 	if( '' != jQuery( apiKey ).val() ){
-		console.log( jQuery( this ));
 		resetDropdown( 'form', false );
 		resetDropdown( 'sequence', false );
 	}
@@ -42,7 +41,7 @@ echo $config_fields;
 	function resetDropdown( type, hardRefresh ){
 
 		var tag = 'config[processors][' + pId + '][config][cf-convertkit-' + type + ']';
-		console.log( tag );
+
 		var sel = document.getElementsByName( tag );
 		sel = sel[0];
 
