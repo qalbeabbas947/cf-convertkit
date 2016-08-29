@@ -110,12 +110,15 @@ function cf_convertkit_fields(){
 		array(
 			'id'       => 'cf-convertkit-sequence-id',
 			'type'     => 'hidden',
-			'label' => ' '
+			'label' => __( 'Sequence ID', 'cf-convertkit' ),
+			'required' => false,
 		),
 		array(
 			'id'       => 'cf-convertkit-form-id',
 			'type'     => 'hidden',
-			'label' => ' '
+			'label' => __( 'Form ID', 'cf-convertkit' ),
+			'required' => false,
+
 		),
 		array(
 			'id'       => 'cf-convertkit-email',
@@ -299,7 +302,7 @@ function cf_convertkit_dropdown_options(){
 
 			$the_options = array();
 			if( ! empty( $options  ) && property_exists( $options, $prop )){
-				$the_options = array_combine( wp_list_pluck( $options->$prop, 'id'  ), wp_list_pluck( $options->$prop, 'name'  )  );
+				$the_options = array_merge( array( 0 => '--' ), array_combine( wp_list_pluck( $options->$prop, 'id'  ), wp_list_pluck( $options->$prop, 'name'  )  ) );
 			}
 
 			$config[ 'type' ] = 'dropdown';
