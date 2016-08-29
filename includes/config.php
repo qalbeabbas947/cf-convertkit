@@ -16,14 +16,17 @@ $message = printf( '<div class="notice"><p>%s</p></div>', esc_html__( 'You can u
 
 $config_fields              = Caldera_Forms_Processor_UI::config_fields( cf_convertkit_fields() );
 echo $config_fields;
-?>
 
+?>
+<span class="foost" data-process-id="{{_id}}"></span>
 <script type="text/javascript">
 
+	var pId = "{{_id}}";
 
 	var apiKey = jQuery( '#cf-convertkit-apikey' ).val();
 
 	if( '' != jQuery( apiKey ).val() ){
+		console.log( jQuery( this ));
 		resetDropdown( 'form', false );
 		resetDropdown( 'sequence', false );
 	}
@@ -38,6 +41,11 @@ echo $config_fields;
 
 	function resetDropdown( type, hardRefresh ){
 
+		var tag = 'config[processors][' + pId + '][config][cf-convertkit-' + type + ']';
+		console.log( tag );
+		var sel = document.getElementsByName( tag );
+		sel = sel[0];
+
 		var spinnerEL = document.getElementById( 'cf-convertkit-' + type + '-spinner' );
 		var data = {
 			dropdown: type,
@@ -51,7 +59,7 @@ echo $config_fields;
 		var xhr = jQuery.get( ajaxurl, data );
 		xhr.done(function( r ) {
 			if( 'object' == typeof  r ){
-				jQuery( '#cf-convertkit-' + type + '-wrap .caldera-config-field select' ).html( '' ).append( jQuery( r.data.input ).children() );
+				jQuery( sel ).html( '' ).append( jQuery( r.data.input ).children() );
 				jQuery( '#cf-convertkit-' + type ).val( jQuery( '#cf-convertkit-' + type + '-id' ).val() )
 					.on( 'change', function () {
 						jQuery( '#cf-convertkit-' + type + '-id' ).val( jQuery( this ).val() );
