@@ -32,6 +32,18 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 		if( ! isset( $subscriber[ 'email'] ) || ! is_email( $subscriber[ 'email'] ) ){
 			$this->data_object->add_error( esc_html__( 'Email invalid', 'cf-converkit' ) );
 		}else{
+			/**
+			 * Change ConvertKit Form ID to subscribe to
+			 *
+			 * @since 1.0.4
+			 *
+			 * @param int|string $ck_form The numeric ID of the ConvertKit form to subscribe user to.
+			 * @param array $form Caldera Forms form configuration
+			 * @param array $config Processor configuration
+			 * @param Caldera_Forms_Processor_Get_Data $data_object Instance of data object for this processor's config
+			 */
+			$ck_form = apply_filters( 'cf_convertkit_form_id', $ck_form, $form, $config, $this->data_object );
+
 			if ( 0 < absint( $ck_form ) ) {
 				$form_client = new forms( $api_key );
 				$added       = $form_client->add( $ck_form, $subscriber );
@@ -46,10 +58,23 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 			}
 
 			if ( is_null( $this->data_object->get_errors() ) ) {
-				$sequence = $this->data_object->get_value( 'cf-convertkit-sequence-id' );
-				if ( 0 < absint( $sequence ) ) {
+				$ck_sequence = $this->data_object->get_value( 'cf-convertkit-sequence-id' );
+
+				/**
+				 * Change ConverKit sequence ID to subscribe to
+				 *
+				 * @since 1.0.4
+				 *
+				 * @param int|string $ck_sequence The numeric ID of the sequence to subscribe user to.
+				 * @param array $form Caldera Forms form configuration
+				 * @param array $config Processor configuration
+				 * @param Caldera_Forms_Processor_Get_Data $data_object Instance of data object for this processor's config
+				 */
+				$ck_sequence = apply_filters( 'cf_convertkit_sequence_id', $ck_sequence, $form, $config, $this->data_object );
+
+				if ( 0 < absint( $ck_sequence ) ) {
 					$sequence_client = new sequences( $api_key );
-					$added           = $sequence_client->add( $sequence, $subscriber );
+					$added           = $sequence_client->add( $ck_sequence, $subscriber );
 					if ( is_string( $added ) || is_numeric( $added ) ) {
 						$this->data_object->add_error( $added );
 					} else {

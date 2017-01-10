@@ -3,4 +3,4 @@ Text domain -- cf-convertkit
 Function prefix -- cf_convertkit
 Class prefix - n/a
 Root namespace -- n/a
-Filter Prefix -- n/a
+Filter Prefix -- cf_convertkit
