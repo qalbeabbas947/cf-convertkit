@@ -3,6 +3,7 @@
 
 use calderawp\convertKit\forms;
 use calderawp\convertKit\sequences;
+use calderawp\convertKit\tags;
 
 class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 
@@ -80,6 +81,39 @@ class CF_ConvertKit_Processor extends Caldera_Forms_Processor_Newsletter {
 					} else {
 						if ( isset( $added->subscription ) && isset( $added->subscription->id ) ) {
 							Caldera_Forms::set_submission_meta( 'convertkit-form-sequence-id', $added->subscription->id, $form, $proccesid );
+						}
+					}
+
+				}
+			}
+
+			if ( is_null( $this->data_object->get_errors() ) ) {
+				$ck_tags = $this->data_object->get_value( 'cf-convertkit-tags' );
+
+				if ( ! empty( $ck_tags ) ) {
+					$tags_client = new tags( $api_key );
+					$all_tags = $tags_client->get_all();
+					$ck_tags = explode(', ', $ck_tags );
+
+					if( is_array( $ck_tags ) ) {
+						foreach( $ck_tags as $ck_tag ) {
+
+							foreach( $all_tags->tags as $each_tag ) {
+
+								if ( $ck_tag === $each_tag->name ) {
+
+									$added = $tags_client->subscribe( $each_tag->id, $subscriber[ 'email'] );
+
+									if ( is_string( $added ) || is_numeric( $added ) ) {
+										$this->data_object->add_error( $added );
+									} else {
+										if ( isset( $added->subscription ) && isset( $added->subscription->id ) ) {
+											Caldera_Forms::set_submission_meta( 'convertkit-form-tag-id', $added->subscription->id, $form, $proccesid );
+										}
+									}
+
+								}
+							}
 						}
 					}
 
