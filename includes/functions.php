@@ -20,9 +20,10 @@ use calderawp\convertKit\sequences;
  * @since 0.1.0
 
  */
-function cf_convertkit_load(){
+function cf_convertkit_load( $processors ){
 	Caldera_Forms_Autoloader::add_root( 'CF_ConvertKit', CF_CONVERTKIT_PATH . 'classes' );
 	new CF_ConvertKit_Processor( cf_convertkit_config(), cf_convertkit_fields(), 'cf_converkit' );
+	return $processors;
 }
 
 /**
