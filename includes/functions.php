@@ -52,11 +52,20 @@ function cf_convertkit_config(){
  *
  * @since 0.1.0
  *
+ * @param $pid processor ID since 1.0.5
+ *
  * @return array
  */
-function cf_convertkit_forms_field_config(){
+function cf_convertkit_forms_field_config( $pid ){
+
+	if( null === $pid ){
+		$pid = 'cf-convertkit-form';
+	} else {
+		$pid = 'cf-convertkit-form-' . $pid;
+	}
+
 	return array(
-		'id'            => 'cf-convertkit-form',
+		'id'            =>  $pid,
 		'label'         => __( 'Form', 'cf-convertkit' ),
 		'type'          => 'dropdown',
 		'options'       => array(
@@ -74,11 +83,20 @@ function cf_convertkit_forms_field_config(){
  *
  * @since 0.1.0
  *
+ * @param $pid processor ID since 1.0.5
+ *
  * @return array
  */
-function cf_convertkit_sequences_field_config(){
+function cf_convertkit_sequences_field_config( $pid ){
+
+	if( null === $pid){
+		$pid = 'cf-convertkit-sequence';
+	} else {
+		$pid = 'cf-convertkit-form-sequence-' . $pid;
+	}
+
 	return array(
-		'id'            => 'cf-convertkit-sequence',
+		'id'            =>  $pid,
 		'label'         => __( 'Sequence', 'cf-convertkit' ),
 		'type'          => 'dropdown',
 		'options'       => array(
@@ -106,8 +124,8 @@ function cf_convertkit_fields(){
 			'type'          => 'text',
 			'required'      => true,
 		),
-		cf_convertkit_forms_field_config(),
-		cf_convertkit_sequences_field_config(),
+		cf_convertkit_forms_field_config( null ),
+		cf_convertkit_sequences_field_config( null ),
 		array(
 			'id'       => 'cf-convertkit-sequence-id',
 			'type'     => 'hidden',
@@ -278,21 +296,22 @@ function cf_convert_kit_add_refresh_button( $field, $type, $id ){
  * @since 0.1.0
  */
 function cf_convertkit_dropdown_options(){
-	if( isset( $_GET[ 'nonce' ] ) && isset( $_GET[ 'dropdown' ] ) && is_string(  $_GET[ 'dropdown' ] ) && in_array( $_GET[ 'dropdown' ], array( 'form', 'sequence') ) && isset( $_GET[ 'api_key' ]) ){
+	if( isset( $_GET[ 'nonce' ] ) && isset( $_GET[ 'dropdown' ] ) && is_string(  $_GET[ 'dropdown' ] ) && in_array( $_GET[ 'dropdown' ], array( 'form', 'sequence') ) && isset( $_GET[ 'api_key' ]) && isset( $_GET['processor_id'] ) ){
 		if( wp_verify_nonce(  $_GET[ 'nonce'] ) && current_user_can( Caldera_Forms::get_manage_cap( 'edit' ) ) ){
 			$api_key = trim( strip_tags( $_GET[ 'api_key' ]  ) );
+			$pid = $_GET['processor_id'];
 			$from_cache = true;
 			if( isset( $_GET[ 'hard_refresh' ] ) && 'false' == $_GET[ 'hard_refresh' ] || false == $_GET[ 'hard_refresh' ] ){
 				$from_cache = false;
 			}
-			switch ($_GET[ 'dropdown' ]  ){
+			switch ( $_GET[ 'dropdown' ] ){
 				case 'form' :
-					$config  = cf_convertkit_sequences_field_config();
+					$config  = cf_convertkit_forms_field_config( $pid );
 					$prop = 'forms';
 					$options = cf_convertkit_get_forms( $api_key, $from_cache );
 					break;
 				case 'sequence' :
-					$config  = cf_convertkit_sequences_field_config();
+					$config  = cf_convertkit_sequences_field_config( $pid );
 					$prop = 'courses';
 					$options = cf_convertkit_get_sequences( $api_key, $from_cache );
 					break;
