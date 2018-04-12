@@ -18,15 +18,15 @@ $config_fields              = Caldera_Forms_Processor_UI::config_fields( cf_conv
 echo $config_fields;
 
 ?>
-<span class="foost" data-process-id="{{_id}}"></span>
+<span class="cf-convertkit-process-id" data-process-id="{{_id}}"></span>
 <script type="text/javascript">
 
     var pId = "{{_id}}";
 
-	jQuery(".foost").siblings("#cf-convertkit-sequence-id").attr("id", "cf-convertkit-sequence-id-" + pId );
-    jQuery(".foost").siblings("#cf-convertkit-form-id").attr("id", "cf-convertkit-form-id-" + pId );
-    jQuery(".foost").siblings("#cf-convertkit-form-wrap").find("#cf-convertkit-form").attr("id", "cf-convertkit-form-" + pId );
-    jQuery(".foost").siblings("#cf-convertkit-sequence-wrap").find("#cf-convertkit-sequence").attr("id", "cf-convertkit-sequence-" + pId );
+	jQuery(".cf-convertkit-process-id").siblings("#cf-convertkit-sequence-id").attr("id", "cf-convertkit-sequence-id-" + pId );
+    jQuery(".cf-convertkit-process-id").siblings("#cf-convertkit-form-id").attr("id", "cf-convertkit-form-id-" + pId );
+    jQuery(".cf-convertkit-process-id").siblings("#cf-convertkit-form-wrap").find("#cf-convertkit-form").attr("id", "cf-convertkit-form-" + pId );
+    jQuery(".cf-convertkit-process-id").siblings("#cf-convertkit-sequence-wrap").find("#cf-convertkit-sequence").attr("id", "cf-convertkit-sequence-" + pId );
 
 	var apiKey = jQuery( '#cf-convertkit-apikey' ).val();
 
