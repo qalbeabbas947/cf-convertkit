@@ -3,7 +3,7 @@
  * Plugin Name: ConvertKit for Caldera Forms
  * Plugin URI:  https://calderawp.com
  * Description: ConvertKit integration for Caldera Forms
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author:      Josh Pollock for CalderaWP LLC
  * Author URI:  https://CalderaWP.com
  * License:     GPLv2+
@@ -33,7 +33,7 @@
 /**
  * Define constants
  */
-define( 'CF_CONVERTKIT_VER', '1.0.5' );
+define( 'CF_CONVERTKIT_VER', '1.0.6' );
 define( 'CF_CONVERTKIT_URL',     plugin_dir_url( __FILE__ ) );
 define( 'CF_CONVERTKIT_PATH',    dirname( __FILE__ ) . '/' );
 define( 'CF_CONVERTKIT_CORE',    dirname( __FILE__ )  );
